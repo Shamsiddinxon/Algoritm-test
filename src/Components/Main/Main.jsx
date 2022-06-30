@@ -4,8 +4,12 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import SinglItem from "../../Hooks/selectedHook";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
 function Main() {
+  let [option, setOption] = useState();
+  let [menuDiv, setMenuDiv] = useState(false);
   const [singlItem, setSinglItem] = SinglItem();
   let [list, setList] = useState(
     JSON.parse(localStorage.getItem("list")) || []
@@ -24,7 +28,75 @@ function Main() {
   }, []);
 
   return (
-    <div className="main w-11/12 mx-auto">
+    <div
+      className="main w-11/12 mx-auto py-4"
+      onKeyDown={(e) => setMenuDiv(false)}
+    >
+      <div className="relative">
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": { m: 1, width: "25ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            onKeyUp={(e) => {
+              setMenuDiv(true);
+              let inputValue = e.target.value;
+              let inputlists = [];
+              for (let rep of list) {
+                if (
+                  inputValue.toLowerCase() ===
+                  rep.displayName.slice(0, inputValue.length).toLowerCase()
+                ) {
+                  console.log("Bo'ldiii");
+                  if (inputlists.length < 7) {
+                    inputlists.push(rep);
+                  }
+                }
+              }
+
+              setOption(inputlists);
+              console.log(option);
+            }}
+            id="outlined-basic"
+            label="Outlined"
+            variant="outlined"
+          />
+        </Box>
+
+        {menuDiv ? (
+          <div className="menu absolute bg-white w-1/3 p-4">
+            {option ? (
+              option.map((i) => (
+                <div>
+                  <NavLink
+                    onClick={(e) => {
+                      let select = list.filter(
+                        (i) => i.offerId === e.target.id
+                      );
+                      setSinglItem(select);
+                      console.log(singlItem);
+                    }}
+                    id={i.offerId}
+                    to="/about"
+                  >
+                    {i.displayName}
+                  </NavLink>
+                </div>
+              ))
+            ) : (
+              <div>
+                <p>none</p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
       <div className="">
         {list ? (
           <div className="main_list flex justify-around">
