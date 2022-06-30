@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Contextt } from "../Context/selectedContext";
 
-const selectedHook = () => {
+const SelectedHook = () => {
   const karItem = useContext(Contextt);
 
   return [karItem.state, karItem.setState];
 };
 
-export default selectedHook;
+export default SelectedHook;

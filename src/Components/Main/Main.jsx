@@ -51,13 +51,23 @@ function Main() {
                   onClick={(e) => {
                     let select = list.filter((i) => i.offerId === e.target.id);
                     setSinglItem(select);
-                    console.log(singlItem);
                   }}
                   id={item.offerId}
                   variant="outlined"
                   className="p-0 mb-1 ml-4"
                 >
-                  <NavLink to="/about" className="p-1">
+                  <NavLink
+                    onClick={(e) => {
+                      let select = list.filter(
+                        (i) => i.offerId === e.target.id
+                      );
+                      setSinglItem(select);
+                      console.log(singlItem);
+                    }}
+                    id={item.offerId}
+                    to="/about"
+                    className="p-1"
+                  >
                     Open
                   </NavLink>
                 </Button>
