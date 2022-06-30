@@ -57,6 +57,9 @@ function Main() {
                   }
                 }
               }
+              if (inputValue.length === 0) {
+                setMenuDiv(false);
+              }
 
               setOption(inputlists);
               console.log(option);
